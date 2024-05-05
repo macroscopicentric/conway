@@ -1,0 +1,18 @@
+# conway
+[tool.poetry]
+name = "conway"
+version = "0.1.0"
+description = ""
+authors = ["Rachel King <rachel.b.king@gmail.com>"]
+readme = "README.md"
+packages = [{include = "conway"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+
+[tool.poetry.scripts]
+main = "conway.main:main"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
