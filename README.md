@@ -33,6 +33,7 @@ Things I think would be fun:
 - [x] passing in a json file of a starting config
 - [x] json got tedious real fast. allow import via simple text files
 - [ ] refactoring in separate responsibilities and adding some tests
+- [ ] typing would be super helpful here esp when parsing
 - [ ] adding in new types of organisms and interactions
 - [ ] i think i'm misusing exception handling in the parser, fix that
 - [ ] a separate front end that allows some interactivity (clicking to spawn new live cells?!)

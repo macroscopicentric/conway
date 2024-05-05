@@ -3,6 +3,7 @@ import sys
 import time
 
 from conway.parser import Parser
+from conway.renderer import Renderer
 
 
 class Cell:
@@ -107,30 +108,6 @@ class Grid:
         return self.grid
 
 
-# this was mostly stolen off stack overflow
-# (here: https://stackoverflow.com/questions/66615552/display-multi-line-python-console-ascii-animation)
-# small helper function to remember the number of lines
-# and cursor position after printing a grid
-# so we can go back to the top when printing the next grid
-def prep_terminal_for_animated_output(number_of_lines):
-    # scroll up to make room for output
-    print(f"\033[{number_of_lines}S", end="")
-    # move cursor back up
-    print(f"\033[{number_of_lines}A", end="")
-    # save current cursor position
-    print("\033[s", end="")
-
-
-# similar to the above,
-# small helper method to actually go back to the
-# saved cursor position before printing the
-# newest version of the grid
-def treadmill_print(thingy):
-    # restore saved cursor position
-    print("\033[u", end="")
-    print(thingy)
-
-
 def main():
     arg_parser = argparse.ArgumentParser()
     arg_parser.add_argument(
@@ -143,9 +120,11 @@ def main():
 
     parser = Parser(args.f)
     grid = Grid(parser.parse())
-    prep_terminal_for_animated_output(grid.column_length)
+
+    renderer = Renderer(grid.column_length)
+    renderer.prep_terminal()
     while True:
-        treadmill_print(grid)
+        renderer.render(grid)
         grid.transition()
         time.sleep(1)
 
