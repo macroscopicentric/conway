@@ -1,7 +1,8 @@
 import argparse
-import json
 import sys
 import time
+
+from conway.parser import Parser
 
 
 class Cell:
@@ -107,6 +108,7 @@ class Grid:
 
 
 # this was mostly stolen off stack overflow
+# (here: https://stackoverflow.com/questions/66615552/display-multi-line-python-console-ascii-animation)
 # small helper function to remember the number of lines
 # and cursor position after printing a grid
 # so we can go back to the top when printing the next grid
@@ -130,22 +132,22 @@ def treadmill_print(thingy):
 
 
 def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument(
+    arg_parser = argparse.ArgumentParser()
+    arg_parser.add_argument(
         "-f",
         help="the location of the json-formatted starter file",
         type=str,
         default="examples/blinker.json",
     )
-    args = parser.parse_args()
+    args = arg_parser.parse_args()
 
-    with open(args.f) as f:
-        grid = Grid(json.load(f))
-        prep_terminal_for_animated_output(grid.column_length)
-        while True:
-            treadmill_print(grid)
-            grid.transition()
-            time.sleep(1)
+    parser = Parser(args.f)
+    grid = Grid(parser.parse())
+    prep_terminal_for_animated_output(grid.column_length)
+    while True:
+        treadmill_print(grid)
+        grid.transition()
+        time.sleep(1)
 
 
 if __name__ == "__main__":
