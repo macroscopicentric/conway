@@ -17,7 +17,9 @@ You can start the script via:
 poetry run main [-f file_path_to_initial_grid]
 ```
 
-where `file_path_to_initial_grid` is a JSON file that includes an initial grid display to start the transitions from. By default as an example, the script will use `blinker.json` included in the `examples` directory in this module.
+where `file_path_to_initial_grid` is a JSON or text file that includes an initial grid display to start the transitions from. By default as an example, the script will use `blinker.json` included in the `examples` directory in this module. See the examples directory for valid formats for both JSON and basic text files.
+
+(Note: the parser is currently very simple and makes assumptions based on file extension, so make sure you include the appropriate extension if you want to try your own file.)
 
 ## Development
 
