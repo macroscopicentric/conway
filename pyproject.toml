@@ -9,6 +9,7 @@ packages = [{include = "conway"}]
 
 [tool.poetry.dependencies]
 python = "^3.11"
+black = "^24.4.2"
 
 [tool.poetry.scripts]
 main = "conway.main:main"

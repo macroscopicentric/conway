@@ -3,12 +3,9 @@ import json
 import sys
 import time
 
+
 class Cell:
-    neighbors = [
-        [-1, -1], [-1, 0], [-1, 1],
-        [0, -1],           [0, 1],
-        [1, -1],  [1, 0],  [1, 1]
-    ]
+    neighbors = [[-1, -1], [-1, 0], [-1, 1], [0, -1], [0, 1], [1, -1], [1, 0], [1, 1]]
 
     def __init__(self, liveness: int):
         self.liveness = liveness
@@ -36,9 +33,8 @@ class Cell:
 
             # if it's a valid neighbor (within bounds), add it to the array
             if x_within_bounds and y_within_bounds:
-                neighbors.append({'x': neighbor_x, 'y': neighbor_y})
+                neighbors.append({"x": neighbor_x, "y": neighbor_y})
         return neighbors
-
 
     def new_liveness(self, live_neighbor_count: int):
         # is the cell dead or alive?
@@ -51,6 +47,7 @@ class Cell:
         else:
             cell_state = self.liveness
         return cell_state
+
 
 # grid is finite, must be length x and width y
 class Grid:
@@ -81,10 +78,14 @@ class Grid:
                 # primary logic check
                 # find all neighbors and check them for liveness
                 cell = self.grid[current_y][current_x]
-                neighbors = cell.find_neighbors(current_x, current_y, self.column_length, self.row_length)
+                neighbors = cell.find_neighbors(
+                    current_x, current_y, self.column_length, self.row_length
+                )
                 live_neighbor_count = 0
                 for neighbor_coordinates in neighbors:
-                    neighbor = self.grid[neighbor_coordinates['y']][neighbor_coordinates['x']]
+                    neighbor = self.grid[neighbor_coordinates["y"]][
+                        neighbor_coordinates["x"]
+                    ]
                     if neighbor.live():
                         live_neighbor_count += 1
 
@@ -104,6 +105,7 @@ class Grid:
         self.grid = new_grid
         return self.grid
 
+
 # this was mostly stolen off stack overflow
 # small helper function to remember the number of lines
 # and cursor position after printing a grid
@@ -116,6 +118,7 @@ def prep_terminal_for_animated_output(number_of_lines):
     # save current cursor position
     print("\033[s", end="")
 
+
 # similar to the above,
 # small helper method to actually go back to the
 # saved cursor position before printing the
@@ -125,10 +128,14 @@ def treadmill_print(thingy):
     print("\033[u", end="")
     print(thingy)
 
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        "-f", help="the location of the json-formatted starter file", type=str, default='examples/blinker.json'
+        "-f",
+        help="the location of the json-formatted starter file",
+        type=str,
+        default="examples/blinker.json",
     )
     args = parser.parse_args()
 
@@ -139,6 +146,7 @@ def main():
             treadmill_print(grid)
             grid.transition()
             time.sleep(1)
+
 
 if __name__ == "__main__":
     main()
